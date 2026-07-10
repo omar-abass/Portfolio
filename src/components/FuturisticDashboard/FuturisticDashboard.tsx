@@ -498,7 +498,7 @@ const FuturisticDashboard = ({ className }: FuturisticDashboardProps) => {
 
             <div className="fdb-social-row" role="list" aria-label="Social media links">
               <a
-                href="https://github.com/yourusername"
+                href="https://github.com/omar-abass"
                 aria-label="GitHub"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -508,7 +508,7 @@ const FuturisticDashboard = ({ className }: FuturisticDashboardProps) => {
                 <GitHubIcon />
               </a>
               <a
-                href="https://linkedin.com/in/yourusername"
+                href="https://www.linkedin.com/in/omar-mohamed-abass-08440a407/"
                 aria-label="LinkedIn"
                 target="_blank"
                 rel="noopener noreferrer"
