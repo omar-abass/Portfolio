@@ -105,6 +105,204 @@ class NeuralNode {
   }
 }
 
+interface CircuitPoint {
+  x: number;
+  y: number;
+}
+
+interface CircuitTrace {
+  points: CircuitPoint[];
+  width: number;
+  opacity: number;
+  phase: number;
+  particles: { offset: number; size: number; phase: number }[];
+}
+
+const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+
+const getPointAlongPath = (points: CircuitPoint[], t: number): CircuitPoint => {
+  if (points.length === 0) {
+    return { x: 0, y: 0 };
+  }
+
+  const segmentLengths = points.slice(1).map((point, index) => {
+    const prev = points[index];
+    return Math.hypot(point.x - prev.x, point.y - prev.y);
+  });
+  const totalLength = segmentLengths.reduce((sum, len) => sum + len, 0);
+  if (totalLength === 0) {
+    return points[0];
+  }
+
+  let target = clamp(t, 0, 1) * totalLength;
+  for (let i = 0; i < segmentLengths.length; i += 1) {
+    const segmentLength = segmentLengths[i];
+    if (target <= segmentLength || i === segmentLengths.length - 1) {
+      const start = points[i];
+      const end = points[i + 1];
+      const ratio = segmentLength === 0 ? 0 : target / segmentLength;
+      return {
+        x: start.x + (end.x - start.x) * ratio,
+        y: start.y + (end.y - start.y) * ratio,
+      };
+    }
+    target -= segmentLength;
+  }
+
+  return points[points.length - 1];
+};
+
+const createCircuitTrace = (
+  start: CircuitPoint,
+  maxX: number,
+  portraitSize: number,
+  index: number,
+): CircuitTrace => {
+  const maxLength = Math.max(maxX - start.x - portraitSize * 0.04, portraitSize * 0.12);
+  const length = Math.min(maxLength, portraitSize * (0.24 + Math.random() * 0.10));
+  const directionSign = index % 2 === 0 ? 1 : -1;
+
+  const firstCornerX = start.x + length * (0.28 + Math.random() * 0.05);
+  const firstCornerY = start.y;
+  const secondCornerX = firstCornerX;
+  const secondCornerY = clamp(
+    firstCornerY + directionSign * portraitSize * (0.06 + Math.random() * 0.03),
+    start.y - portraitSize * 0.18,
+    start.y + portraitSize * 0.18,
+  );
+  const thirdCornerX = secondCornerX + length * (0.24 + Math.random() * 0.09);
+  const thirdCornerY = secondCornerY;
+  const finalX = clamp(start.x + length, start.x + portraitSize * 0.15, maxX);
+  const finalY = clamp(
+    thirdCornerY + (Math.random() - 0.5) * portraitSize * 0.04,
+    start.y - portraitSize * 0.12,
+    start.y + portraitSize * 0.12,
+  );
+
+  const points: CircuitPoint[] = [
+    start,
+    { x: firstCornerX, y: firstCornerY },
+    { x: secondCornerX, y: secondCornerY },
+    { x: thirdCornerX, y: thirdCornerY },
+    { x: finalX, y: finalY },
+  ];
+
+  const particles = points.map((_, idx) => ({
+    offset: idx / Math.max(points.length - 1, 1),
+    size: 1 + Math.random() * 1.6,
+    phase: Math.random() * Math.PI * 2,
+  }));
+
+  return {
+    points,
+    width: 1.2 + Math.random() * 1.4,
+    opacity: 0.55 + Math.random() * 0.25,
+    phase: Math.random() * Math.PI * 2,
+    particles,
+  };
+};
+
+const generateCircuitLines = (w: number, h: number): CircuitTrace[] => {
+  const portraitSize = Math.min(w * 0.95, 480);
+  const px = (w - portraitSize) / 2;
+  const py = (h - portraitSize) / 2;
+  const maxX = w - portraitSize * 0.04;
+
+  const anchors = [
+    { x: 0.66, y: 0.22 },
+    { x: 0.62, y: 0.15 },
+    { x: 0.68, y: 0.34 },
+    { x: 0.62, y: 0.58 },
+    { x: 0.60, y: 0.78 },
+  ];
+
+  return anchors.flatMap((anchor, index) => {
+    const start = { x: px + portraitSize * anchor.x, y: py + portraitSize * anchor.y };
+    const main = createCircuitTrace(start, maxX, portraitSize, index);
+    const branchStart = {
+      x: main.points[2].x,
+      y: clamp(
+        main.points[2].y + (index % 2 === 0 ? portraitSize * 0.02 : -portraitSize * 0.02),
+        py + portraitSize * 0.08,
+        py + portraitSize * 0.92,
+      ),
+    };
+    const branch = createCircuitTrace(branchStart, maxX, portraitSize, index + 7);
+
+    return [main, branch];
+  });
+};
+
+const drawCircuitNetwork = (
+  ctx: CanvasRenderingContext2D,
+  traces: CircuitTrace[],
+  phase: number,
+) => {
+  traces.forEach((trace, traceIndex) => {
+    const gradient = ctx.createLinearGradient(
+      trace.points[0].x,
+      trace.points[0].y,
+      trace.points[trace.points.length - 1].x,
+      trace.points[trace.points.length - 1].y,
+    );
+    gradient.addColorStop(0, 'rgba(0, 191, 255, 0.95)');
+    gradient.addColorStop(0.65, 'rgba(79, 195, 255, 0.62)');
+    gradient.addColorStop(1, 'rgba(0, 191, 255, 0.18)');
+
+    ctx.save();
+    ctx.strokeStyle = gradient;
+    ctx.lineWidth = trace.width;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.shadowColor = 'rgba(79, 195, 255, 0.45)';
+    ctx.shadowBlur = 12;
+    ctx.globalAlpha = trace.opacity;
+    ctx.beginPath();
+    trace.points.forEach((point, idx) => {
+      if (idx === 0) ctx.moveTo(point.x, point.y);
+      else ctx.lineTo(point.x, point.y);
+    });
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+    ctx.lineWidth = Math.max(0.8, trace.width * 0.4);
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.globalAlpha = trace.opacity * 0.55;
+    ctx.beginPath();
+    trace.points.forEach((point, idx) => {
+      if (idx === 0) ctx.moveTo(point.x, point.y);
+      else ctx.lineTo(point.x, point.y);
+    });
+    ctx.stroke();
+    ctx.restore();
+
+    trace.particles.forEach((particle) => {
+      const point = getPointAlongPath(trace.points, (particle.offset + Math.sin(particle.phase + phase) * 0.03) % 1);
+      ctx.save();
+      ctx.fillStyle = `rgba(173, 216, 255, ${0.3 + (Math.sin(phase + particle.phase) + 1) * 0.12})`;
+      ctx.shadowColor = 'rgba(79, 195, 255, 0.4)';
+      ctx.shadowBlur = 8;
+      ctx.beginPath();
+      ctx.arc(point.x, point.y, particle.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    });
+
+    const pulsePoint = getPointAlongPath(trace.points, (Math.sin(phase + trace.phase) * 0.5 + 0.5) % 1);
+    ctx.save();
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+    ctx.shadowColor = 'rgba(0, 191, 255, 0.75)';
+    ctx.shadowBlur = 16;
+    ctx.beginPath();
+    ctx.arc(pulsePoint.x, pulsePoint.y, 2.2, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  });
+};
+
 /* ─── Main Component ─── */
 
 const HeroImage = ({ className }: HeroImageProps) => {
@@ -181,6 +379,10 @@ const HeroImage = ({ className }: HeroImageProps) => {
       nodesRef.current.forEach((node) => {
         node.baseRadius = (210 + Math.random() * 55) * scaleMultiplier;
       });
+
+      if (imagesLoaded) {
+        circuitLinesRef.current = generateCircuitLines(rect.width, rect.height);
+      }
     };
 
     window.addEventListener('resize', handleResize);
@@ -358,6 +560,9 @@ const HeroImage = ({ className }: HeroImageProps) => {
 
       // nodes
       nodes.forEach((node) => node.draw(ctx));
+
+      drawCircuitNetwork(ctx, circuitLinesRef.current, circuitPhaseRef.current);
+      circuitPhaseRef.current += 0.01;
 
       ctx.restore(); // restore dpr scale
       animationId = requestAnimationFrame(render);

@@ -28,18 +28,6 @@ const handleAboutClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
 const HeroText = ({ className }: HeroTextProps) => {
   return (
     <div className={`max-w-2xl ${className || ''}`}>
-      <motion.div
-        custom={0.1}
-        variants={fadeUp}
-        initial="hidden"
-        animate="visible"
-      >
-        <div className="hero-badge inline-flex items-center gap-3 rounded-full border border-cyan-400/20 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-cyan-300 shadow-[0_0_30px_rgba(56,189,248,0.10)]">
-          <span className="hero-badge-dot inline-flex h-2.5 w-2.5 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(56,189,248,0.7)]" />
-          AI Engineer
-        </div>
-      </motion.div>
-
       <motion.h1
         custom={0.2}
         variants={fadeUp}
