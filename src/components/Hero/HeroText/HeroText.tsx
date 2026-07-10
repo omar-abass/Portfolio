@@ -1,8 +1,18 @@
 import { motion } from 'framer-motion';
 import { Button } from '@components/common/Button';
 import { SECTIONS } from '@utils/constants';
-import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
+import { FiGithub, FiLinkedin } from 'react-icons/fi';
 import './HeroText.css';
+
+const GmailIcon = () => (
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4 5h16a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V6a1 1 0 011-1z" fill="#ffffff" fillOpacity="0.06" />
+    <path d="M3.5 6.5L12 12.5l8.5-6" stroke="#4285F4" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M3.5 17.5L12 11.5l8.5 6" stroke="#EA4335" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M12 12.5l8.5 6" stroke="#FABB05" strokeWidth="1.8" strokeLinecap="round" />
+    <path d="M12 12.5L3.5 17.5" stroke="#34A853" strokeWidth="1.8" strokeLinecap="round" />
+  </svg>
+);
 
 export interface HeroTextProps {
   className?: string;
@@ -106,7 +116,7 @@ const HeroText = ({ className }: HeroTextProps) => {
             rel="noopener noreferrer"
             className="hero-social-link"
           >
-            <FiMail /> Email
+            <GmailIcon /> Email
           </a>
         </div>
       </motion.div>

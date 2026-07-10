@@ -4,7 +4,7 @@ export const SITE_CONFIG = {
   author: 'Omar Mohamed',
   email: 'omar@example.com',
   location: 'Remote',
-  resumeUrl: '/resume.pdf',
+  resumeUrl: '/Omar%20Mohamed%20Abass_CV.pdf',
 } as const;
 
 export const SECTIONS = {

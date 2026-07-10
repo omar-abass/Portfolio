@@ -41,9 +41,12 @@ const LinkedInIcon = () => (
   </svg>
 );
 
-const MailIcon = () => (
+const GmailIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="fdb-social-icon-svg">
-    <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    <rect x="3" y="4" width="18" height="16" rx="3" ry="3" fill="none" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M7 9.5L12 13.2l5-3.7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M7 14.5L12 10.8l5 3.7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    <text x="12" y="17.7" textAnchor="middle" fontSize="10" fontWeight="700" fill="currentColor" fontFamily="sans-serif">G</text>
   </svg>
 );
 
@@ -495,8 +498,13 @@ const FuturisticDashboard = ({ className }: FuturisticDashboardProps) => {
           >
             <ul className="fdb-contact-list" aria-label="Contact information">
               <li className="fdb-contact-item">
-                <a href="mailto:om1747440@gmail.com" className="fdb-contact-item hover:text-cyan-400 transition-colors">
-                  <span className="fdb-contact-icon" aria-hidden="true"><EmailIcon /></span>
+                <a
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=om1747440@gmail.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="fdb-contact-item hover:text-cyan-400 transition-colors"
+                >
+                  <span className="fdb-contact-icon" aria-hidden="true"><GmailIcon /></span>
                   <span className="fdb-contact-text">om1747440@gmail.com</span>
                 </a>
               </li>
@@ -524,14 +532,14 @@ const FuturisticDashboard = ({ className }: FuturisticDashboardProps) => {
                 <LinkedInIcon />
               </a>
               <a
-                href="mailto:om1747440@gmail.com"
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=om1747440@gmail.com"
                 aria-label="Email"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="fdb-social-btn"
                 role="listitem"
               >
-                <MailIcon />
+                <GmailIcon />
               </a>
             </div>
             <p className="fdb-contact-text mt-3">om1747440@gmail.com</p>

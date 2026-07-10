@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@lib/cn';
-import { SECTIONS } from '@utils/constants';
+import { SECTIONS, SITE_CONFIG } from '@utils/constants';
 import './Navbar.css';
 
 export interface NavbarProps {
@@ -188,8 +188,8 @@ const Navbar = ({ className }: NavbarProps) => {
 
       {/* ── Right: Download CV ── */}
       <a
-        href="/Omar-Abass-CV.pdf"
-        download
+        href={SITE_CONFIG.resumeUrl}
+        download="Omar Mohamed Abass_CV.pdf"
         className="navbar-cv-btn"
         style={
           {
@@ -199,8 +199,8 @@ const Navbar = ({ className }: NavbarProps) => {
         onClick={(e) => {
           e.preventDefault();
           const a = document.createElement('a');
-          a.href = '/Omar-Abass-CV.pdf';
-          a.download = 'Omar-Abass-CV.pdf';
+          a.href = SITE_CONFIG.resumeUrl;
+          a.download = 'Omar Mohamed Abass_CV.pdf';
           a.click();
         }}
         onMouseEnter={(e) => {
@@ -288,13 +288,13 @@ const Navbar = ({ className }: NavbarProps) => {
               className="mt-3 pt-3 border-t border-white/[0.06]"
             >
               <a
-                href="/Omar-Abass-CV.pdf"
-                download
+                href={SITE_CONFIG.resumeUrl}
+                download="Omar Mohamed Abass_CV.pdf"
                 onClick={(e) => {
                   e.preventDefault();
                   const a = document.createElement('a');
-                  a.href = '/Omar-Abass-CV.pdf';
-                  a.download = 'Omar-Abass-CV.pdf';
+                  a.href = SITE_CONFIG.resumeUrl;
+                  a.download = 'Omar Mohamed Abass_CV.pdf';
                   a.click();
                 }}
                 className={cn(
