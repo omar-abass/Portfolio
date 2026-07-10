@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { TypingText } from '@components/common/TypingText';
 import { Button } from '@components/common/Button';
 import { SECTIONS } from '@utils/constants';
 import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
@@ -29,82 +28,72 @@ const handleAboutClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
 const HeroText = ({ className }: HeroTextProps) => {
   return (
     <div className={`max-w-2xl ${className || ''}`}>
-      {/* Eyebrow */}
-      <motion.p
+      <motion.div
         custom={0.1}
         variants={fadeUp}
         initial="hidden"
         animate="visible"
-        className="text-neural-glow/80 font-mono text-xs uppercase tracking-[0.3em] mb-5"
       >
-        Welcome to the Future
-      </motion.p>
+        <div className="hero-badge inline-flex items-center gap-3 rounded-full border border-cyan-400/20 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-cyan-300 shadow-[0_0_30px_rgba(56,189,248,0.10)]">
+          <span className="hero-badge-dot inline-flex h-2.5 w-2.5 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(56,189,248,0.7)]" />
+          AI Engineer
+        </div>
+      </motion.div>
 
-      {/* Main Title */}
       <motion.h1
-        custom={0.25}
+        custom={0.2}
         variants={fadeUp}
         initial="hidden"
         animate="visible"
+        className="mt-8 text-5xl font-black tracking-[-0.05em] leading-[0.95] text-white sm:text-6xl md:text-7xl"
       >
-        <span
-          className="hero-gradient-text block font-bold tracking-tight leading-[1.05]"
-          style={{
-            fontSize: 'clamp(2.5rem, 6.5vw, 5rem)',
-          }}
-        >
-          Omar Abass
+        Omar
+        <span className="block bg-gradient-to-r from-sky-300 via-cyan-300 to-violet-400 bg-clip-text text-transparent">
+          Abbas
         </span>
       </motion.h1>
 
-      {/* Subtitle */}
+      <motion.p
+        custom={0.3}
+        variants={fadeUp}
+        initial="hidden"
+        animate="visible"
+        className="mt-5 text-sm uppercase tracking-[0.22em] text-slate-400"
+      >
+        AI Engineer • Software Developer • Computer Science Student
+      </motion.p>
+
       <motion.p
         custom={0.4}
         variants={fadeUp}
         initial="hidden"
         animate="visible"
-        className="text-neutral-400/80 font-light tracking-[0.2em] uppercase text-sm md:text-base mt-2"
+        className="mt-8 max-w-xl text-base leading-8 text-slate-300"
       >
-        Portfolio
+        I build intelligent digital products that blend AI, software, and premium interfaces. My work is focused on delivering clean, futuristic experiences that feel polished, reliable, and beautifully engineered.
       </motion.p>
 
-      {/* Typing text */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="mt-8 mb-8 text-base md:text-lg text-neutral-400 leading-relaxed"
-        aria-label="Typing effect description"
+        custom={0.5}
+        variants={fadeUp}
+        initial="hidden"
+        animate="visible"
+        className="mt-10 flex flex-col gap-6"
       >
-        <TypingText
-          text="Crafting intelligent digital experiences that blur the line between human creativity and machine precision."
-          speed={30}
-          delay={1500}
-        />
-      </motion.div>
-
-      {/* Buttons & Social links */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-col gap-6 items-center lg:items-start"
-      >
-        <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+        <div className="flex flex-wrap gap-4">
           <a href={`#${SECTIONS.ABOUT}`} onClick={handleAboutClick} className="inline-block">
-            <Button variant="primary" size="lg">
+            <Button variant="primary" size="lg" className="rounded-[18px] px-8 py-4">
               About Me
             </Button>
           </a>
-          <a href={`#${SECTIONS.CONTACT}`}>
-            <Button variant="outline" size="lg">
+          <a href={`#${SECTIONS.CONTACT}`} className="inline-block">
+            <Button variant="outline" size="lg" className="rounded-[18px] px-8 py-4">
               Get In Touch
             </Button>
           </a>
         </div>
 
-        {/* Centered beneath the buttons on mobile/tablet, aligned on desktop */}
-        <div className="hero-social-links-row justify-center lg:justify-start">
+        <div className="hero-social-links-row justify-start">
           <a
             href="https://github.com/omar-abass"
             target="_blank"

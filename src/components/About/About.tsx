@@ -10,8 +10,8 @@ export interface AboutProps {
 
 const stats = [
   { label: 'Years Coding', value: '2+', icon: 'code' },
-  { label: 'Projects Completed', value: '10+', icon: 'briefcase' },
-  { label: 'Hackathons Participated', value: '3+', icon: 'trophy' },
+  { label: 'Projects Completed', value: '5+', icon: 'briefcase' },
+  { label: 'Hackathon Participated', value: '1', icon: 'trophy' },
   { label: 'Passion & Dedication', value: '100%', icon: 'heart' },
 ];
 
@@ -79,7 +79,7 @@ const About = ({ className }: AboutProps)=> {
       </div>
 
       <div className="relative mx-auto max-w-7xl px-6">
-        <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] items-center">
+        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
           <motion.div
             variants={fadeLeft}
             initial="hidden"
@@ -103,19 +103,21 @@ const About = ({ className }: AboutProps)=> {
               </p>
             </div>
 
-            <div className="mt-12 grid gap-4 sm:grid-cols-2">
+            <div className="mt-12 grid gap-5 sm:grid-cols-2">
               {stats.map(stat => (
                 <motion.div
                   key={stat.label}
                   whileHover={{ y: -6, scale: 1.01 }}
                   transition={{ duration: 0.25 }}
-                  className="group rounded-[26px] border border-white/10 bg-white/5 px-5 py-6 backdrop-blur-xl shadow-[0_0_25px_rgba(0,240,255,0.08)] transition-all duration-300 hover:border-cyan-300/30 hover:shadow-[0_0_32px_rgba(56,189,248,0.22)]"
+                  className="group flex h-full min-h-[210px] flex-col justify-between rounded-[26px] border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-[0_0_28px_rgba(0,240,255,0.10)] transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/30 hover:shadow-[0_0_42px_rgba(56,189,248,0.22)]"
                 >
-                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-cyan-300/20 bg-cyan-400/10 text-cyan-300 shadow-[0_0_18px_rgba(56,189,248,0.15)]">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-300/20 bg-cyan-400/10 text-cyan-300 shadow-[0_0_18px_rgba(56,189,248,0.15)]">
                     <Icon name={stat.icon} />
                   </div>
-                  <p className="mt-5 text-3xl font-semibold text-white">{stat.value}</p>
-                  <p className="mt-2 text-sm uppercase tracking-[0.18em] text-slate-400">{stat.label}</p>
+                  <div>
+                    <p className="mt-6 text-4xl font-semibold text-white sm:text-5xl">{stat.value}</p>
+                    <p className="mt-3 text-sm uppercase tracking-[0.18em] text-slate-400">{stat.label}</p>
+                  </div>
                 </motion.div>
               ))}
             </div>
@@ -161,17 +163,20 @@ const About = ({ className }: AboutProps)=> {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="group relative overflow-hidden rounded-[30px] border border-white/10 bg-white/5 p-8 shadow-[0_0_30px_rgba(0,240,255,0.08)] transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/30 hover:shadow-[0_0_40px_rgba(56,189,248,0.18)]"
+            className="group relative flex h-full flex-col overflow-hidden rounded-[30px] border border-white/10 bg-gradient-to-br from-slate-950/60 via-slate-900/45 to-slate-950/70 p-8 shadow-[0_0_30px_rgba(0,240,255,0.10)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/30 hover:shadow-[0_0_42px_rgba(56,189,248,0.18)]"
           >
+            <div className="absolute inset-0 rounded-[30px] border border-cyan-300/10 opacity-50" />
             <div className="absolute right-6 top-6 h-24 w-24 rounded-full border border-cyan-300/20 bg-cyan-400/10 blur-3xl" />
-            <div className="relative z-10">
-              <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-cyan-300/20 bg-cyan-400/10 text-cyan-300 shadow-[0_0_22px_rgba(56,189,248,0.18)]">
-                <DeveloperIcon />
+            <div className="relative z-10 flex flex-1 flex-col justify-between">
+              <div>
+                <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-cyan-300/20 bg-cyan-400/10 text-cyan-300 shadow-[0_0_22px_rgba(56,189,248,0.18)]">
+                  <DeveloperIcon />
+                </div>
+                <h3 className="mt-6 text-2xl font-semibold text-white">The Developer</h3>
+                <p className="mt-5 text-base leading-8 text-slate-300">
+                  I build intuitive, scalable applications that feel futuristic and grounded. My focus is on bringing modern AI interfaces, seamless user flows, and polished interactions together into one premium experience.
+                </p>
               </div>
-              <h3 className="mt-6 text-2xl font-semibold text-white">The Developer</h3>
-              <p className="mt-4 text-sm leading-7 text-slate-300">
-                I build intuitive, scalable applications that feel futuristic and grounded. My focus is on bringing modern AI interfaces, seamless user flows, and polished interactions together into one premium experience.
-              </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 {techPills.map(tech => (
                   <span key={tech} className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-200 transition-all duration-300 hover:border-cyan-300/40 hover:text-cyan-200 hover:shadow-[0_0_18px_rgba(56,189,248,0.15)]">
@@ -180,9 +185,6 @@ const About = ({ className }: AboutProps)=> {
                 ))}
               </div>
             </div>
-            <div className="absolute inset-y-0 right-6 top-14 flex items-center justify-center">
-              <div className="h-32 w-32 rounded-3xl border border-cyan-300/25 bg-cyan-400/5 shadow-[0_0_30px_rgba(56,189,248,0.16)] backdrop-blur-xl" />
-            </div>
           </motion.div>
 
           <motion.div
@@ -190,20 +192,28 @@ const About = ({ className }: AboutProps)=> {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-100px' }}
-            className="group relative overflow-hidden rounded-[30px] border border-white/10 bg-white/5 p-8 shadow-[0_0_30px_rgba(0,240,255,0.08)] transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/30 hover:shadow-[0_0_40px_rgba(56,189,248,0.18)]"
+            className="group relative flex h-full flex-col overflow-hidden rounded-[30px] border border-white/10 bg-gradient-to-br from-slate-950/60 via-slate-900/50 to-slate-950/75 p-8 shadow-[0_0_30px_rgba(0,240,255,0.10)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/30 hover:shadow-[0_0_42px_rgba(56,189,248,0.18)]"
           >
+            <div className="absolute inset-0 rounded-[30px] border border-sky-300/10 opacity-40" />
             <div className="absolute left-6 top-6 h-24 w-24 rounded-full border border-violet-300/20 bg-violet-400/10 blur-3xl" />
-            <div className="relative z-10">
-              <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-cyan-300/20 bg-cyan-400/10 text-cyan-300 shadow-[0_0_22px_rgba(56,189,248,0.18)]">
-                <EyeIcon />
+            <div className="absolute right-6 top-24 hidden h-24 w-24 rounded-full border border-cyan-300/10 bg-cyan-400/5 blur-3xl lg:block" />
+            <div className="relative z-10 flex flex-1 flex-col justify-between">
+              <div>
+                <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-cyan-300/20 bg-cyan-400/10 text-cyan-300 shadow-[0_0_22px_rgba(56,189,248,0.18)]">
+                  <EyeIcon />
+                </div>
+                <h3 className="mt-6 text-2xl font-semibold text-white">The Vision</h3>
+                <p className="mt-5 text-base leading-8 text-slate-300">
+                  I envision AI-powered digital experiences that empower people through clarity, elegance, and intelligence. Every interface should feel effortless, immersive, and distinctly premium.
+                </p>
               </div>
-              <h3 className="mt-6 text-2xl font-semibold text-white">The Vision</h3>
-              <p className="mt-4 text-sm leading-7 text-slate-300">
-                I envision AI-powered digital experiences that empower people through clarity, elegance, and intelligence. Every interface should feel effortless, immersive, and distinctly premium.
-              </p>
-            </div>
-            <div className="absolute inset-y-0 right-6 top-14 flex items-center justify-center">
-              <div className="h-32 w-32 rounded-3xl border border-sky-300/20 bg-sky-400/5 shadow-[0_0_40px_rgba(56,189,248,0.16)] backdrop-blur-xl" />
+              <div className="pointer-events-none absolute inset-y-0 right-6 top-28 hidden w-32 lg:block">
+                <div className="absolute top-2 right-4 h-[1px] w-16 rounded-full bg-cyan-300/10" />
+                <div className="absolute top-12 right-8 h-10 w-[1px] bg-sky-300/10" />
+                <div className="absolute bottom-16 right-4 h-2 w-10 rounded-full bg-cyan-300/10" />
+                <div className="absolute bottom-6 right-12 h-0.5 w-20 rounded-full bg-violet-300/10" />
+                <span className="absolute top-16 right-2 block h-2 w-2 rounded-full bg-cyan-300/10" />
+              </div>
             </div>
           </motion.div>
         </div>

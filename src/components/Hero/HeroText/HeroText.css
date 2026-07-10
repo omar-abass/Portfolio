@@ -1,49 +1,63 @@
 /* HeroText Component Styles */
 
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hero-badge-dot {
+  display: inline-flex;
+}
+
 .hero-social-links-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .hero-social-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  color: rgba(255, 255, 255, 0.9);
+  gap: 0.65rem;
+  padding: 0.85rem 1rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.92);
   font-weight: 500;
   text-decoration: none;
-  cursor: pointer;
   transition: all 250ms ease-in-out;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.06);
 }
 
 .hero-social-link:hover {
-  color: #22d3ee;
-  text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+  color: #ffffff;
+  border-color: rgba(56, 189, 248, 0.35);
+  background: rgba(2, 132, 199, 0.14);
+  box-shadow: 0 0 22px rgba(56, 189, 248, 0.18);
 }
 
 .hero-social-link svg {
   width: 18px;
   height: 18px;
-  stroke-width: 2px;
+  stroke-width: 1.8;
   transition: transform 250ms ease-in-out;
 }
 
 .hero-social-link:hover svg {
   transform: scale(1.05);
-  filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.5));
 }
 
 .hero-social-separator {
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.28);
   font-weight: 400;
   user-select: none;
 }
 
-/* Responsive updates */
 @media (max-width: 768px) {
   .hero-social-links-row {
-    gap: 1rem;
+    justify-content: center;
   }
 }

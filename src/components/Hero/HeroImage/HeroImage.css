@@ -1,27 +1,63 @@
-/* HeroImage — minimal, static container */
+/* HeroImage — premium glass portrait card */
 
-.portrait-wrapper {
+.hero-portrait-card {
+  position: relative;
+  width: 100%;
+}
+
+.hero-portrait-wrapper {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  /* ~20% larger than before */
-  max-width: 600px;
   aspect-ratio: 1 / 1;
-  margin: 0 auto;
-  /* clean depth shadow only, no glowing filter */
-  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.65));
+  border-radius: 2rem;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 30px 80px rgba(0, 240, 255, 0.12);
+  backdrop-filter: blur(28px);
+  animation: hero-float 8s ease-in-out infinite;
+}
+
+.hero-portrait-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(2, 132, 199, 0.18), rgba(255, 255, 255, 0.02));
+  pointer-events: none;
+}
+
+.hero-portrait-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.18), rgba(168, 85, 247, 0.08));
+  mask: linear-gradient(#fff 0 0);
+  pointer-events: none;
+}
+
+@keyframes hero-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @media (max-width: 640px) {
-  .portrait-wrapper {
+  .hero-portrait-wrapper {
     max-width: 360px;
   }
 }
 
 @media (min-width: 641px) and (max-width: 1024px) {
-  .portrait-wrapper {
+  .hero-portrait-wrapper {
     max-width: 480px;
   }
 }

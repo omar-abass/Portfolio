@@ -405,37 +405,39 @@ const HeroImage = ({ className }: HeroImageProps) => {
 
   return (
     <div className={cn('relative flex items-center justify-center', className)}>
-      <div
-        ref={containerRef}
-        className="portrait-wrapper cursor-none"
-        onMouseMove={handleMouseMove}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        {/* Canvas: portraits + neural network */}
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full z-10 pointer-events-none"
-        />
-
-        {/* Brain Anchor for the scrolling neural network */}
+      <div className="hero-portrait-card relative w-full max-w-[640px]">
         <div
-          id="hero-portrait-brain-anchor"
-          className="absolute left-[58%] top-[36%] w-2 h-2 rounded-full bg-cyan-400 opacity-0 pointer-events-none transform -translate-x-1/2 -translate-y-1/2"
-        />
+          ref={containerRef}
+          className="hero-portrait-wrapper"
+          onMouseMove={handleMouseMove}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {/* Canvas: portraits + neural network */}
+          <canvas
+            ref={canvasRef}
+            className="absolute inset-0 w-full h-full z-10 pointer-events-none"
+          />
 
-        {/* Loading state */}
-        {!imagesLoaded && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-neural-deep/60 backdrop-blur-md z-20">
-            <div className="w-12 h-12 rounded-full border-2 border-t-neural-glow border-white/5 animate-spin" />
-            <div className="text-xs text-neutral-400 mt-3 font-mono uppercase tracking-[0.2em] animate-pulse">
-              Syncing Neural Core…
+          {/* Brain Anchor for the scrolling neural network */}
+          <div
+            id="hero-portrait-brain-anchor"
+            className="absolute left-[58%] top-[36%] w-2 h-2 rounded-full bg-cyan-400 opacity-0 pointer-events-none transform -translate-x-1/2 -translate-y-1/2"
+          />
+
+          {/* Loading state */}
+          {!imagesLoaded && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-950/65 backdrop-blur-md z-20 rounded-[28px]">
+              <div className="w-12 h-12 rounded-full border-2 border-t-cyan-300 border-white/10 animate-spin" />
+              <div className="text-xs text-neutral-400 mt-3 font-mono uppercase tracking-[0.2em] animate-pulse">
+                Syncing Neural Core…
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
