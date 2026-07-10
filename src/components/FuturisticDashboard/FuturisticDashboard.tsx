@@ -41,6 +41,12 @@ const LinkedInIcon = () => (
   </svg>
 );
 
+const MailIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="fdb-social-icon-svg">
+    <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+  </svg>
+);
+
 
 
 /* ════════════════════════════════════════
@@ -517,7 +523,18 @@ const FuturisticDashboard = ({ className }: FuturisticDashboardProps) => {
               >
                 <LinkedInIcon />
               </a>
+              <a
+                href="mailto:om1747440@gmail.com"
+                aria-label="Email"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="fdb-social-btn"
+                role="listitem"
+              >
+                <MailIcon />
+              </a>
             </div>
+            <p className="fdb-contact-text mt-3">om1747440@gmail.com</p>
           </motion.div>
 
         </div>
