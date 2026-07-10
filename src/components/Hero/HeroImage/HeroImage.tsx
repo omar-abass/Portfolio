@@ -152,6 +152,43 @@ const getPointAlongPath = (points: CircuitPoint[], t: number): CircuitPoint => {
   return points[points.length - 1];
 };
 
+const getPartialPath = (points: CircuitPoint[], t: number): CircuitPoint[] => {
+  if (points.length === 0) return [];
+  const capped = clamp(t, 0, 1);
+  if (capped === 0) return [points[0]];
+
+  const segmentLengths = points.slice(1).map((point, index) => {
+    const prev = points[index];
+    return Math.hypot(point.x - prev.x, point.y - prev.y);
+  });
+  const totalLength = segmentLengths.reduce((sum, len) => sum + len, 0);
+  if (totalLength === 0) return [points[0]];
+
+  let remaining = capped * totalLength;
+  const result: CircuitPoint[] = [points[0]];
+
+  for (let i = 0; i < segmentLengths.length; i += 1) {
+    const segmentLength = segmentLengths[i];
+    const start = points[i];
+    const end = points[i + 1];
+
+    if (remaining >= segmentLength) {
+      result.push(end);
+      remaining -= segmentLength;
+      continue;
+    }
+
+    const ratio = segmentLength === 0 ? 0 : remaining / segmentLength;
+    result.push({
+      x: start.x + (end.x - start.x) * ratio,
+      y: start.y + (end.y - start.y) * ratio,
+    });
+    break;
+  }
+
+  return result;
+};
+
 const createCircuitTrace = (
   start: CircuitPoint,
   maxX: number,
@@ -237,13 +274,23 @@ const drawCircuitNetwork = (
   ctx: CanvasRenderingContext2D,
   traces: CircuitTrace[],
   phase: number,
+  opacity: number,
+  reveal: number,
 ) => {
   traces.forEach((trace) => {
+    const effectiveOpacity = trace.opacity * opacity * reveal;
+    if (effectiveOpacity < 0.02) {
+      return;
+    }
+
+    const path = getPartialPath(trace.points, reveal);
+    if (path.length < 2) return;
+
     const gradient = ctx.createLinearGradient(
-      trace.points[0].x,
-      trace.points[0].y,
-      trace.points[trace.points.length - 1].x,
-      trace.points[trace.points.length - 1].y,
+      path[0].x,
+      path[0].y,
+      path[path.length - 1].x,
+      path[path.length - 1].y,
     );
     gradient.addColorStop(0, 'rgba(0, 191, 255, 0.95)');
     gradient.addColorStop(0.65, 'rgba(79, 195, 255, 0.62)');
@@ -256,9 +303,9 @@ const drawCircuitNetwork = (
     ctx.lineJoin = 'round';
     ctx.shadowColor = 'rgba(79, 195, 255, 0.45)';
     ctx.shadowBlur = 12;
-    ctx.globalAlpha = trace.opacity;
+    ctx.globalAlpha = effectiveOpacity;
     ctx.beginPath();
-    trace.points.forEach((point, idx) => {
+    path.forEach((point, idx) => {
       if (idx === 0) ctx.moveTo(point.x, point.y);
       else ctx.lineTo(point.x, point.y);
     });
@@ -270,9 +317,9 @@ const drawCircuitNetwork = (
     ctx.lineWidth = Math.max(0.8, trace.width * 0.4);
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
-    ctx.globalAlpha = trace.opacity * 0.55;
+    ctx.globalAlpha = effectiveOpacity * 0.55;
     ctx.beginPath();
-    trace.points.forEach((point, idx) => {
+    path.forEach((point, idx) => {
       if (idx === 0) ctx.moveTo(point.x, point.y);
       else ctx.lineTo(point.x, point.y);
     });
@@ -280,9 +327,9 @@ const drawCircuitNetwork = (
     ctx.restore();
 
     trace.particles.forEach((particle) => {
-      const point = getPointAlongPath(trace.points, (particle.offset + Math.sin(particle.phase + phase) * 0.03) % 1);
+      const point = getPointAlongPath(path, (particle.offset + Math.sin(particle.phase + phase) * 0.03) % 1);
       ctx.save();
-      ctx.fillStyle = `rgba(173, 216, 255, ${0.3 + (Math.sin(phase + particle.phase) + 1) * 0.12})`;
+      ctx.fillStyle = `rgba(173, 216, 255, ${Math.max(0, 0.3 + (Math.sin(phase + particle.phase) + 1) * 0.12) * opacity * reveal})`;
       ctx.shadowColor = 'rgba(79, 195, 255, 0.4)';
       ctx.shadowBlur = 8;
       ctx.beginPath();
@@ -291,9 +338,9 @@ const drawCircuitNetwork = (
       ctx.restore();
     });
 
-    const pulsePoint = getPointAlongPath(trace.points, (Math.sin(phase + trace.phase) * 0.5 + 0.5) % 1);
+    const pulsePoint = getPointAlongPath(path, (Math.sin(phase + trace.phase) * 0.5 + 0.5) % 1);
     ctx.save();
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+    ctx.fillStyle = `rgba(255, 255, 255, ${0.9 * opacity * reveal})`;
     ctx.shadowColor = 'rgba(0, 191, 255, 0.75)';
     ctx.shadowBlur = 16;
     ctx.beginPath();
@@ -326,6 +373,8 @@ const HeroImage = ({ className }: HeroImageProps) => {
   const canvasHeightRef = useRef(480);
   const dprRef = useRef(1);
   const isHoveringRef = useRef(false);
+  const circuitOpacityRef = useRef(1);
+  const circuitRevealRef = useRef(1);
 
   /* ── Preload images ── */
   useEffect(() => {
@@ -563,8 +612,24 @@ const HeroImage = ({ className }: HeroImageProps) => {
       // nodes
       nodes.forEach((node) => node.draw(ctx));
 
-      drawCircuitNetwork(ctx, circuitLinesRef.current, circuitPhaseRef.current);
-      circuitPhaseRef.current += 0.01;
+      const desiredOpacity = isHoveringRef.current ? 0 : 1;
+      circuitOpacityRef.current += (desiredOpacity - circuitOpacityRef.current) * 0.15;
+      circuitOpacityRef.current = clamp(circuitOpacityRef.current, 0, 1);
+
+      const desiredReveal = isHoveringRef.current ? 0 : 1;
+      circuitRevealRef.current += (desiredReveal - circuitRevealRef.current) * 0.14;
+      circuitRevealRef.current = clamp(circuitRevealRef.current, 0, 1);
+
+      if (circuitOpacityRef.current > 0.01 && circuitRevealRef.current > 0.01) {
+        drawCircuitNetwork(
+          ctx,
+          circuitLinesRef.current,
+          circuitPhaseRef.current,
+          circuitOpacityRef.current,
+          circuitRevealRef.current,
+        );
+        circuitPhaseRef.current += 0.01;
+      }
 
       ctx.restore(); // restore dpr scale
       animationId = requestAnimationFrame(render);

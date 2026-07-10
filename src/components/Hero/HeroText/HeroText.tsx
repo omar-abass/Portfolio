@@ -100,7 +100,12 @@ const HeroText = ({ className }: HeroTextProps) => {
             <FiLinkedin /> LinkedIn
           </a>
           <span className="hero-social-separator">•</span>
-          <a href="mailto:om1747440@gmail.com" className="hero-social-link">
+          <a
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=om1747440@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hero-social-link"
+          >
             <FiMail /> Email
           </a>
         </div>
