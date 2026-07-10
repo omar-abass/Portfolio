@@ -1,0 +1,27 @@
+/* HeroImage — minimal, static container */
+
+.portrait-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* ~20% larger than before */
+  max-width: 600px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  /* clean depth shadow only, no glowing filter */
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.65));
+}
+
+@media (max-width: 640px) {
+  .portrait-wrapper {
+    max-width: 360px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .portrait-wrapper {
+    max-width: 480px;
+  }
+}

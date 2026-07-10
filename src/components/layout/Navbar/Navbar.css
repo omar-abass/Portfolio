@@ -1,0 +1,198 @@
+/* Navbar Component Styling */
+
+.navbar-container {
+  position: fixed;
+  top: 1.25rem; /* top-5 */
+  left: 0;
+  right: 0;
+  z-index: 50;
+  margin: 0 auto;
+  max-width: 1200px;
+  width: min(1200px, calc(100% - 40px));
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 2rem; /* px-8 */
+  padding-right: 2rem; /* px-8 */
+  border-radius: 9999px; /* rounded-full */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Glassmorphism adjustments on scroll */
+.navbar-container.scrolled {
+  background-color: rgba(10, 10, 18, 0.9);
+  box-shadow: 0 10px 30px -10px rgba(0, 240, 255, 0.15);
+  border-color: rgba(0, 240, 255, 0.15);
+  height: 72px; /* Smooth height reduction on scroll */
+  top: 1rem;
+}
+
+.navbar-container.not-scrolled {
+  background-color: rgba(10, 10, 18, 0.6);
+  box-shadow: 0 10px 25px -15px rgba(0, 240, 255, 0.05);
+}
+
+/* Desktop Links Container */
+.navbar-links {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Responsive Desktop Layout (md and up) */
+@media (min-width: 768px) {
+  .navbar-links {
+    display: flex;
+  }
+}
+
+/* Spacing and gaps adjusting smoothly based on screen width */
+@media (min-width: 1200px) {
+  .navbar-links {
+    gap: 1.75rem; /* ~28px */
+  }
+  .navbar-link-item {
+    font-size: 0.875rem; /* 14px */
+  }
+}
+
+@media (max-width: 1199.98px) and (min-width: 992px) {
+  .navbar-links {
+    gap: 1.25rem; /* ~20px */
+  }
+  .navbar-link-item {
+    font-size: 0.875rem; /* 14px */
+  }
+}
+
+@media (max-width: 991.98px) and (min-width: 768px) {
+  .navbar-links {
+    gap: 0.65rem; /* ~10px gap */
+  }
+  .navbar-link-item {
+    font-size: 0.875rem; /* 14px - never below 14px */
+  }
+  .navbar-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Logo styling */
+.navbar-logo {
+  font-weight: 700;
+  font-size: 1.25rem; /* text-xl */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  user-select: none;
+  transition: opacity 0.3s ease;
+}
+
+.navbar-logo:hover {
+  opacity: 0.9;
+}
+
+/* Link item white-space nowrap */
+.navbar-link-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  white-space: nowrap;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* CV Button Styling */
+.navbar-cv-btn {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  height: 44px;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  flex-shrink: 0;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 768px) {
+  .navbar-cv-btn {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .navbar-cv-btn {
+    height: 40px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: 0.825rem;
+  }
+}
+
+.navbar-cv-btn:hover {
+  background-color: #00f0ff;
+  color: #0a0a12;
+  border-color: #00f0ff;
+  transform: scale(1.03);
+}
+
+.navbar-cv-btn:active {
+  transform: scale(0.97);
+}
+
+/* Hamburger button styling */
+.navbar-hamburger {
+  display: flex;
+  position: relative;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.navbar-hamburger:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+@media (min-width: 768px) {
+  .navbar-hamburger {
+    display: none;
+  }
+}
+
+/* Mobile dropdown container */
+.navbar-mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0.5rem;
+  right: 0.5rem;
+  margin-top: 0.75rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  background: rgba(10, 10, 18, 0.95);
+  box-shadow: 0 10px 30px rgba(0, 240, 255, 0.15), inset 0 0 15px rgba(0, 240, 255, 0.05);
+  padding: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .navbar-mobile-menu {
+    display: none;
+  }
+}

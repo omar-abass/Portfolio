@@ -1,0 +1,808 @@
+/* ═══════════════════════════════════════════════════════
+   FuturisticDashboard — Premium cyber/AI two-row section
+═══════════════════════════════════════════════════════ */
+
+/* ── Section wrapper ── */
+.fdb-section {
+  position: relative;
+  padding: 5rem 0 6rem;
+  overflow: hidden;
+}
+
+/* Invisible anchor spans for sub-section nav links */
+.fdb-anchor {
+  display: block;
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Ambient background radial glow */
+.fdb-section::before {
+  content: '';
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 900px;
+  height: 700px;
+  background: radial-gradient(ellipse at center,
+    rgba(0, 240, 255, 0.035) 0%,
+    transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Container ── */
+.fdb-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Shared panel base ── */
+.fdb-panel {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 1.25rem;
+  padding: 1.75rem 1.5rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Top-left corner gradient tint */
+.fdb-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 240, 255, 0.04) 0%,
+    transparent 55%
+  );
+  pointer-events: none;
+}
+
+/* ── Panel title ── */
+.fdb-panel-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+  margin: 0 0 1.4rem;
+  line-height: 1.3;
+}
+
+/* ── Panel header (title + link side by side) ── */
+.fdb-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.4rem;
+}
+.fdb-panel-header .fdb-panel-title {
+  margin-bottom: 0;
+}
+
+/* ── "View All" link ── */
+.fdb-view-all {
+  font-size: 0.72rem;
+  color: #00f0ff;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  opacity: 0.75;
+  transition: opacity 0.2s ease;
+}
+.fdb-view-all:hover { opacity: 1; }
+
+/* ═══════════════════════════════
+   TOP ROW  (3 equal columns)
+═══════════════════════════════ */
+.fdb-top-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  align-items: stretch;
+}
+
+/* ══════════════════════
+   LEFT — Experience
+══════════════════════ */
+.fdb-experience-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Timeline container */
+.fdb-timeline {
+  position: relative;
+  flex: 1;
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Glowing vertical line */
+.fdb-timeline-line {
+  position: absolute;
+  left: 4px;
+  top: 8px;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    #00f0ff 0%,
+    rgba(0, 240, 255, 0.35) 60%,
+    transparent 100%
+  );
+  box-shadow: 0 0 6px rgba(0, 240, 255, 0.45);
+}
+
+/* Each timeline row */
+.fdb-timeline-item {
+  position: relative;
+  margin-bottom: 1.75rem;
+}
+.fdb-timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Node + horizontal connector */
+.fdb-timeline-node-wrap {
+  position: absolute;
+  left: -1.5rem;
+  top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.fdb-timeline-node {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 240, 255, 0.55);
+  background: rgba(0, 240, 255, 0.08);
+  flex-shrink: 0;
+  z-index: 1;
+  transition: box-shadow 0.3s;
+}
+
+.fdb-timeline-node--active {
+  border-color: #00f0ff;
+  background: rgba(0, 240, 255, 0.22);
+  animation: fdb-node-pulse 2.2s ease-in-out infinite;
+}
+
+.fdb-timeline-h-line {
+  width: 14px;
+  height: 1px;
+  background: rgba(0, 240, 255, 0.3);
+  flex-shrink: 0;
+}
+
+/* Text content */
+.fdb-timeline-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.fdb-timeline-period {
+  display: inline-block;
+  font-size: 0.66rem;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: #00f0ff;
+  letter-spacing: 0.05em;
+}
+
+.fdb-badge {
+  display: inline-block;
+  font-size: 0.58rem;
+  font-weight: 600;
+  padding: 0.12rem 0.45rem;
+  border-radius: 9999px;
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid rgba(0, 240, 255, 0.28);
+  color: #00f0ff;
+  letter-spacing: 0.04em;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+
+.fdb-timeline-role {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0.2rem 0 0.1rem;
+  line-height: 1.3;
+}
+
+.fdb-timeline-company {
+  font-size: 0.75rem;
+  color: rgba(0, 240, 255, 0.65);
+  margin: 0 0 0.25rem;
+}
+
+.fdb-timeline-desc {
+  font-size: 0.71rem;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* "View Resume" outline button */
+.fdb-outline-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  padding: 0.5rem 1.4rem;
+  border: 1px solid rgba(0, 240, 255, 0.32);
+  border-radius: 9999px;
+  background: transparent;
+  color: rgba(0, 240, 255, 0.8);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    color 0.25s ease;
+}
+.fdb-outline-btn:hover {
+  background: rgba(0, 240, 255, 0.07);
+  border-color: rgba(0, 240, 255, 0.6);
+  box-shadow: 0 0 18px -4px rgba(0, 240, 255, 0.4);
+  color: #00f0ff;
+}
+
+/* ══════════════════════
+   CENTER — AI Chip
+══════════════════════ */
+.fdb-chip-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 240, 255, 0.018);
+  border-color: rgba(0, 240, 255, 0.1);
+}
+
+.fdb-chip-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  animation: fdb-float 6.5s ease-in-out infinite;
+}
+
+/* Radial bloom behind the chip */
+.fdb-chip-halo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -56%);
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 240, 255, 0.13) 0%,
+    rgba(0, 240, 255, 0.04) 45%,
+    transparent 70%
+  );
+  pointer-events: none;
+  animation: fdb-halo-pulse 3.5s ease-in-out infinite alternate;
+}
+
+.fdb-chip-svg {
+  width: 230px;
+  height: 230px;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.fdb-chip-caption {
+  font-size: 0.65rem;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: rgba(0, 240, 255, 0.55);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  z-index: 1;
+}
+
+/* SVG animation CSS hooks */
+.fdb-orbit-ring {
+  transform-origin: 160px 160px;
+  animation: fdb-orbit 22s linear infinite;
+}
+.fdb-orbit-ring-rev {
+  transform-origin: 160px 160px;
+  animation: fdb-orbit-rev 30s linear infinite;
+}
+.fdb-trace-pulse {
+  animation: fdb-trace-blink 2.8s ease-in-out infinite alternate;
+}
+.fdb-dot-pulse {
+  animation: fdb-dot-glow 2s ease-in-out infinite alternate;
+}
+.fdb-ai-label {
+  animation: fdb-text-glow 2.5s ease-in-out infinite alternate;
+}
+.fdb-particle     { animation: fdb-particle-drift 4.2s ease-in-out infinite; }
+.fdb-particle-d1  { animation: fdb-particle-drift 4.2s ease-in-out 1.4s infinite; }
+.fdb-particle-d2  { animation: fdb-particle-drift 4.2s ease-in-out 2.8s infinite; }
+
+/* ══════════════════════
+   RIGHT — Certificates
+══════════════════════ */
+.fdb-certs-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.fdb-cert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  flex: 1;
+}
+
+.fdb-cert-card {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.875rem 0.9rem;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 0.875rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.fdb-cert-card:hover {
+  background: rgba(0, 240, 255, 0.055);
+  border-color: rgba(0, 240, 255, 0.22);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px -8px rgba(0, 240, 255, 0.22);
+}
+
+.fdb-cert-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(0, 240, 255, 0.07);
+  border: 1px solid rgba(0, 240, 255, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #00f0ff;
+}
+.fdb-cert-icon-svg {
+  width: 18px;
+  height: 18px;
+}
+
+.fdb-cert-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+.fdb-cert-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.fdb-cert-issuer {
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+/* ═══════════════════════════════
+   DIVIDER
+═══════════════════════════════ */
+.fdb-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1.5rem;
+}
+.fdb-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 240, 255, 0.22) 20%,
+    rgba(0, 240, 255, 0.22) 80%,
+    transparent 100%
+  );
+}
+.fdb-divider-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(0, 240, 255, 0.65);
+  box-shadow: 0 0 7px rgba(0, 240, 255, 0.55);
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════
+   BOTTOM ROW
+═══════════════════════════════ */
+.fdb-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+/* ══════════════════════
+   LEFT — Let's Connect
+══════════════════════ */
+.fdb-connect-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.fdb-connect-desc {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.7;
+  margin: 0;
+  flex: 1;
+}
+
+.fdb-plane-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-top: 1.25rem;
+  animation: fdb-float 5.5s ease-in-out 0.5s infinite;
+}
+.fdb-plane-svg {
+  width: 150px;
+  height: 150px;
+  display: block;
+}
+
+/* ══════════════════════
+   CENTER — Contact Form
+══════════════════════ */
+.fdb-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  height: 100%;
+}
+
+.fdb-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+
+.fdb-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.fdb-form-label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.fdb-input {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 0.65rem;
+  color: #ffffff;
+  font-size: 0.875rem;
+  padding: 0.65rem 0.9rem;
+  outline: none;
+  width: 100%;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+  font-family: inherit;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+}
+.fdb-input::placeholder {
+  color: rgba(255, 255, 255, 0.22);
+}
+.fdb-input:hover:not(:focus) {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+.fdb-input:focus {
+  border-color: rgba(0, 240, 255, 0.42);
+  box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.07);
+  background: rgba(0, 240, 255, 0.035);
+}
+
+.fdb-textarea {
+  resize: none;
+  min-height: 130px;
+  flex: 1;
+}
+
+.fdb-form-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.2rem;
+}
+
+.fdb-send-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.72rem 1.8rem;
+  border: none;
+  border-radius: 0.8rem;
+  background: linear-gradient(135deg, #0ea5e9 0%, #00c8d4 50%, #00f0ff 100%);
+  color: #050816;
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-family: inherit;
+  letter-spacing: 0.025em;
+  cursor: pointer;
+  transition:
+    opacity 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.2s ease;
+  box-shadow: 0 4px 20px -4px rgba(0, 240, 255, 0.45);
+}
+.fdb-send-btn:hover:not(:disabled) {
+  opacity: 0.9;
+  box-shadow: 0 6px 28px -4px rgba(0, 240, 255, 0.6);
+  transform: translateY(-1px);
+}
+.fdb-send-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+.fdb-send-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.fdb-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(5, 8, 22, 0.35);
+  border-top-color: #050816;
+  border-radius: 50%;
+  animation: fdb-spin 0.65s linear infinite;
+}
+
+/* ══════════════════════
+   RIGHT — Contact Info
+══════════════════════ */
+.fdb-info-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.fdb-contact-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.fdb-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+}
+.fdb-contact-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: rgba(0, 240, 255, 0.06);
+  border: 1px solid rgba(0, 240, 255, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #00f0ff;
+}
+.fdb-contact-icon-svg {
+  width: 16px;
+  height: 16px;
+}
+.fdb-contact-text {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.65);
+  word-break: break-all;
+}
+
+/* Social buttons row */
+.fdb-social-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.fdb-social-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.025);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.2s ease;
+}
+.fdb-social-btn:hover {
+  border-color: rgba(0, 240, 255, 0.42);
+  background: rgba(0, 240, 255, 0.07);
+  color: #00f0ff;
+  box-shadow: 0 0 14px -4px rgba(0, 240, 255, 0.4);
+  transform: translateY(-2px);
+}
+.fdb-social-icon-svg { width: 18px; height: 18px; }
+.fdb-social-fallback { font-size: 0.68rem; font-weight: 700; }
+
+/* ═══════════════════════════════
+   KEYFRAMES
+═══════════════════════════════ */
+@keyframes fdb-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-14px); }
+}
+
+@keyframes fdb-halo-pulse {
+  0%   { opacity: 0.55; transform: translate(-50%, -56%) scale(0.93); }
+  100% { opacity: 1.0;  transform: translate(-50%, -56%) scale(1.07); }
+}
+
+@keyframes fdb-orbit {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes fdb-orbit-rev {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+@keyframes fdb-trace-blink {
+  0%   { stroke-opacity: 0.25; }
+  100% { stroke-opacity: 0.95; }
+}
+
+@keyframes fdb-dot-glow {
+  0%   { opacity: 0.45; }
+  100% { opacity: 1.0; }
+}
+
+@keyframes fdb-text-glow {
+  0%   { fill-opacity: 0.65; }
+  100% { fill-opacity: 1.0; }
+}
+
+@keyframes fdb-particle-drift {
+  0%, 100% { opacity: 0.15; transform: translateY(0px); }
+  50%       { opacity: 0.55; transform: translateY(-6px); }
+}
+
+@keyframes fdb-node-pulse {
+  0%, 100% { box-shadow: 0 0 5px rgba(0, 240, 255, 0.45); }
+  50%       { box-shadow: 0 0 14px rgba(0, 240, 255, 0.9); }
+}
+
+@keyframes fdb-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ═══════════════════════════════
+   RESPONSIVE — Tablet ≤ 1100px
+═══════════════════════════════ */
+@media (max-width: 1100px) {
+  .fdb-top-row {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+  /* Chip fills full bottom row */
+  .fdb-chip-panel {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    padding: 1.5rem;
+  }
+  .fdb-chip-svg  { width: 190px; height: 190px; }
+  .fdb-chip-halo { width: 190px; height: 190px; }
+
+  .fdb-bottom-row {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+  /* Form spans both rows right */
+  .fdb-form-panel {
+    grid-column: 2;
+    grid-row: 1 / 3;
+  }
+  .fdb-connect-panel { grid-column: 1; grid-row: 1; }
+  .fdb-info-panel    { grid-column: 1; grid-row: 2; }
+}
+
+/* ═══════════════════════════════
+   RESPONSIVE — Mobile ≤ 768px
+═══════════════════════════════ */
+@media (max-width: 768px) {
+  .fdb-section    { padding: 3rem 0 4rem; }
+  .fdb-container  { padding: 0 1rem; }
+
+  .fdb-top-row,
+  .fdb-bottom-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Reset all column/row overrides */
+  .fdb-chip-panel,
+  .fdb-form-panel,
+  .fdb-connect-panel,
+  .fdb-info-panel {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .fdb-chip-svg  { width: 170px; height: 170px; }
+  .fdb-chip-halo { width: 170px; height: 170px; }
+
+  .fdb-panel { padding: 1.25rem 1rem; }
+  .fdb-panel-title { font-size: 1rem; margin-bottom: 1rem; }
+
+  .fdb-form-row { grid-template-columns: 1fr; }
+
+  .fdb-plane-svg { width: 120px; height: 120px; }
+}
+
+/* ═══════════════════════════════
+   RESPONSIVE — Small ≤ 480px
+═══════════════════════════════ */
+@media (max-width: 480px) {
+  .fdb-chip-svg  { width: 150px; height: 150px; }
+  .fdb-chip-halo { width: 150px; height: 150px; }
+  .fdb-send-btn  { width: 100%; justify-content: center; }
+  .fdb-form-footer { justify-content: stretch; }
+}

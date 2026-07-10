@@ -1,0 +1,49 @@
+/* HeroText Component Styles */
+
+.hero-social-links-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.hero-social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 250ms ease-in-out;
+}
+
+.hero-social-link:hover {
+  color: #22d3ee;
+  text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+}
+
+.hero-social-link svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2px;
+  transition: transform 250ms ease-in-out;
+}
+
+.hero-social-link:hover svg {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.5));
+}
+
+.hero-social-separator {
+  color: rgba(255, 255, 255, 0.25);
+  font-weight: 400;
+  user-select: none;
+}
+
+/* Responsive updates */
+@media (max-width: 768px) {
+  .hero-social-links-row {
+    gap: 1rem;
+  }
+}
