@@ -238,7 +238,7 @@ const drawCircuitNetwork = (
   traces: CircuitTrace[],
   phase: number,
 ) => {
-  traces.forEach((trace, traceIndex) => {
+  traces.forEach((trace) => {
     const gradient = ctx.createLinearGradient(
       trace.points[0].x,
       trace.points[0].y,
@@ -318,6 +318,8 @@ const HeroImage = ({ className }: HeroImageProps) => {
   const trailPointsRef = useRef<
     { x: number; y: number; size: number; life: number; decay: number }[]
   >([]);
+  const circuitLinesRef = useRef<CircuitTrace[]>([]);
+  const circuitPhaseRef = useRef(0);
 
   const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0, isHovering: false });
   const canvasWidthRef = useRef(480);
